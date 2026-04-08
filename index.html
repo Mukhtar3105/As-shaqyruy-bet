@@ -91,7 +91,7 @@
       display: block;
       border-radius: 18px;
       object-fit: cover;
-      aspect-ratio: 3/4;
+      aspect-ratio: 3 / 4;
     }
 
     .text {
@@ -106,7 +106,7 @@
     }
 
     .info {
-      margin-top: 24px;
+      margin-top: 28px;
       background: #fff;
       border-radius: 22px;
       border: 1px solid rgba(184,137,31,0.18);
@@ -116,7 +116,7 @@
     .info-item {
       text-align: center;
       margin-bottom: 18px;
-      line-height: 1.7;
+      line-height: 1.8;
       font-size: 17px;
     }
 
@@ -135,7 +135,7 @@
     }
 
     .dua {
-      margin-top: 24px;
+      margin-top: 28px;
       text-align: center;
       line-height: 1.9;
       font-size: 17px;
@@ -143,128 +143,11 @@
     }
 
     .family {
-      margin-top: 20px;
+      margin-top: 24px;
       text-align: center;
       color: #8a6a2f;
       font-weight: 700;
       line-height: 1.8;
-    }
-
-    .rsvp {
-      margin-top: 34px;
-      background: rgba(255,255,255,0.72);
-      border-radius: 24px;
-      border: 1px solid rgba(184,137,31,0.18);
-      padding: 24px 18px;
-    }
-
-    .rsvp h2 {
-      text-align: center;
-      color: #24573a;
-      font-size: 36px;
-      margin-bottom: 10px;
-      font-family: Georgia, serif;
-    }
-
-    .rsvp p {
-      text-align: center;
-      color: #6b6256;
-      margin-bottom: 22px;
-      line-height: 1.7;
-    }
-
-    .field {
-      margin-bottom: 18px;
-    }
-
-    .field label {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 15px;
-      font-weight: 700;
-      color: #55493c;
-    }
-
-    input[type="text"],
-    textarea {
-      width: 100%;
-      border: 1px solid rgba(184,137,31,0.22);
-      border-radius: 18px;
-      padding: 16px;
-      background: #fff;
-      font-size: 16px;
-      outline: none;
-      color: #3d3429;
-    }
-
-    textarea {
-      resize: none;
-      min-height: 110px;
-    }
-
-    .radio-group {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .radio-option {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: #fff;
-      border: 1px solid rgba(184,137,31,0.22);
-      border-radius: 18px;
-      padding: 16px;
-    }
-
-    .radio-option input {
-      width: 22px;
-      height: 22px;
-      accent-color: #b8891f;
-    }
-
-    .radio-option span {
-      font-size: 17px;
-      font-weight: 600;
-    }
-
-    button {
-      width: 100%;
-      border: none;
-      border-radius: 22px;
-      padding: 18px;
-      background: linear-gradient(135deg, #9b741f, #d2a63c);
-      color: #fff;
-      font-size: 20px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 12px 22px rgba(184,137,31,0.24);
-      transition: .2s;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-    }
-
-    #status {
-      margin-top: 18px;
-      min-height: 26px;
-      text-align: center;
-      font-size: 17px;
-      font-weight: 700;
-    }
-
-    .success {
-      color: #2f7a45;
-    }
-
-    .error {
-      color: #b42318;
-    }
-
-    .hidden {
-      display: none;
     }
 
     @media (max-width: 600px) {
@@ -285,18 +168,15 @@
         font-size: 36px;
       }
 
-      .rsvp h2 {
-        font-size: 30px;
-      }
-
-      .photo-frame {
-        width: 190px;
-      }
-
+      .subtitle,
       .text,
       .dua,
       .info-item {
         font-size: 16px;
+      }
+
+      .photo-frame {
+        width: 190px;
       }
     }
   </style>
@@ -352,70 +232,8 @@
           Токтағанұлы Құрманғазының отбасы
         </div>
 
-        <div class="rsvp">
-          <h2>Қатысу жауабы</h2>
-          <p>Төмендегі форманы толтырып, жауабыңызды жіберсеңіз болады.</p>
-
-          <form
-            id="rsvpForm"
-            action="https://script.google.com/macros/s/AKfycbygiVLHLyhu_tKuBaHb7u8Ce-uhMhNc7P2f6zZ9jzSMIRFwYlM434qYON8WtRz-8A2_/exec"
-            method="POST"
-            target="hidden_iframe"
-          >
-            <div class="field">
-              <label for="name">Аты-жөніңіз</label>
-              <input id="name" type="text" name="name" placeholder="Аты-жөніңізді жазыңыз" required>
-            </div>
-
-            <div class="field">
-              <label>Қатысу мәртебесі</label>
-              <div class="radio-group">
-                <label class="radio-option">
-                  <input type="radio" name="attendance" value="Қатысамын" required>
-                  <span>Қатысамын</span>
-                </label>
-
-                <label class="radio-option">
-                  <input type="radio" name="attendance" value="Қатыса алмаймын">
-                  <span>Қатыса алмаймын</span>
-                </label>
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="note">Қосымша хабарлама</label>
-              <textarea id="note" name="note" placeholder="Қаласаңыз, қысқаша хабарлама қалдыра аласыз"></textarea>
-            </div>
-
-            <input type="hidden" name="event" value="Токтағанұлы Құрманғазыны еске алуға арналған ас">
-            <input type="hidden" name="date" value="23.05.2026">
-            <input type="hidden" name="time" value="13:00">
-            <input type="hidden" name="location" value="Алматы облысы, Іле ауданы, Мұхамеджан Түймебаев ауылы, Алматинская көшесі 1, Ертіс кафесі">
-
-            <button type="submit">Жауап жіберу</button>
-            <div id="status"></div>
-          </form>
-
-          <iframe name="hidden_iframe" class="hidden"></iframe>
-        </div>
       </div>
     </div>
   </div>
-
-  <script>
-    const form = document.getElementById("rsvpForm");
-    const status = document.getElementById("status");
-
-    form.addEventListener("submit", function () {
-      status.className = "";
-      status.textContent = "Жіберілуде...";
-
-      setTimeout(() => {
-        status.className = "success";
-        status.textContent = "Егер Web App дұрыс бапталған болса, жауабыңыз кестеге жіберілді.";
-        form.reset();
-      }, 1500);
-    });
-  </script>
 </body>
 </html>
