@@ -202,12 +202,6 @@
       min-height: 110px;
     }
 
-    input[type="text"]:focus,
-    textarea:focus {
-      border-color: #b8891f;
-      box-shadow: 0 0 0 3px rgba(184,137,31,0.12);
-    }
-
     .radio-group {
       display: flex;
       flex-direction: column;
@@ -267,6 +261,10 @@
 
     .error {
       color: #b42318;
+    }
+
+    .hidden {
+      display: none;
     }
 
     @media (max-width: 600px) {
@@ -356,24 +354,21 @@
 
         <div class="rsvp">
           <h2>Қатысу жауабы</h2>
-
           <p>Төмендегі форманы толтырып, жауабыңызды жіберсеңіз болады.</p>
 
-          <form id="rsvpForm">
+          <form
+            id="rsvpForm"
+            action="https://script.google.com/macros/s/AKfycbygiVLHLyhu_tKuBaHb7u8Ce-uhMhNc7P2f6zZ9jzSMIRFwYlM434qYON8WtRz-8A2_/exec"
+            method="POST"
+            target="hidden_iframe"
+          >
             <div class="field">
               <label for="name">Аты-жөніңіз</label>
-              <input
-                id="name"
-                type="text"
-                name="name"
-                placeholder="Аты-жөніңізді жазыңыз"
-                required
-              >
+              <input id="name" type="text" name="name" placeholder="Аты-жөніңізді жазыңыз" required>
             </div>
 
             <div class="field">
               <label>Қатысу мәртебесі</label>
-
               <div class="radio-group">
                 <label class="radio-option">
                   <input type="radio" name="attendance" value="Қатысамын" required>
@@ -389,75 +384,37 @@
 
             <div class="field">
               <label for="note">Қосымша хабарлама</label>
-              <textarea
-                id="note"
-                name="note"
-                placeholder="Қаласаңыз, қысқаша хабарлама қалдыра аласыз"
-              ></textarea>
+              <textarea id="note" name="note" placeholder="Қаласаңыз, қысқаша хабарлама қалдыра аласыз"></textarea>
             </div>
+
+            <input type="hidden" name="event" value="Токтағанұлы Құрманғазыны еске алуға арналған ас">
+            <input type="hidden" name="date" value="23.05.2026">
+            <input type="hidden" name="time" value="13:00">
+            <input type="hidden" name="location" value="Алматы облысы, Іле ауданы, Мұхамеджан Түймебаев ауылы, Алматинская көшесі 1, Ертіс кафесі">
 
             <button type="submit">Жауап жіберу</button>
             <div id="status"></div>
           </form>
+
+          <iframe name="hidden_iframe" class="hidden"></iframe>
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbyIrO02Jcj23TIUwF38b3AiXliCYXeB21zY-RStD1alTTpzSw1s5PDDAU0L4IJ4zqFc/exec";
-
     const form = document.getElementById("rsvpForm");
     const status = document.getElementById("status");
 
-    form.addEventListener("submit", async function(e) {
-      e.preventDefault();
-
+    form.addEventListener("submit", function () {
       status.className = "";
       status.textContent = "Жіберілуде...";
 
-      const formData = new FormData(form);
-      const params = new URLSearchParams();
-
-      params.append("name", formData.get("name") || "");
-      params.append("attendance", formData.get("attendance") || "");
-      params.append("note", formData.get("note") || "");
-      params.append("event", "Токтағанұлы Құрманғазыны еске алуға арналған ас");
-      params.append("date", "23.05.2026");
-      params.append("time", "13:00");
-      params.append(
-        "location",
-        "Алматы облысы, Іле ауданы, Мұхамеджан Түймебаев ауылы, Алматинская көшесі 1, Ертіс кафесі"
-      );
-
-      try {
-        const response = await fetch(scriptURL, {
-          method: "POST",
-          body: params
-        });
-
-        const text = await response.text();
-        let result;
-
-        try {
-          result = JSON.parse(text);
-        } catch (err) {
-          throw new Error("Серверден қате жауап келді: " + text);
-        }
-
-        if (!response.ok || result.status !== "success") {
-          throw new Error(result.message || "Жіберу кезінде қате шықты");
-        }
-
+      setTimeout(() => {
         status.className = "success";
-        status.textContent = result.message || "Жауабыңыз қабылданды. Рақмет!";
+        status.textContent = "Егер Web App дұрыс бапталған болса, жауабыңыз кестеге жіберілді.";
         form.reset();
-
-      } catch (error) {
-        console.error("Submit error:", error);
-        status.className = "error";
-        status.textContent = error.message || "Жіберу сәтсіз болды. Қайтадан байқап көріңіз.";
-      }
+      }, 1500);
     });
   </script>
 </body>
