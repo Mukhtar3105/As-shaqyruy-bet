@@ -625,9 +625,7 @@
               <div class="status" id="status"></div>
 
               <div class="footer-note">
-                Бұл форма Google Sheets-пен жұмыс істеуі үшін
-                <code>scriptURL</code> орнына өзіңіздің Google Apps Script
-                Web App сілтемеңізді қойыңыз.
+                Жауаптар Google Sheets кестесіне жіберіледі.
               </div>
             </form>
           </section>
@@ -658,22 +656,21 @@
       e.preventDefault();
 
       if (!scriptURL || scriptURL.includes("PASTE_YOUR")) {
-        statusEl.textContent = "Алдымен Google Apps Script сілтемесін енгізіңіз.";
+        statusEl.textContent = "Google Apps Script сілтемесі енгізілмеген.";
         statusEl.style.color = "#b42318";
         return;
       }
 
       const formData = new FormData(form);
 
-      const payload = {
-        name: formData.get("name"),
-        attendance: formData.get("attendance"),
-        note: formData.get("note"),
-        event: "Токтағанұлы Құрманғазыны еске алуға арналған ас",
-        date: "23.05.2026",
-        time: "13:00",
-        location: "Алматы облысы, Іле ауданы, Мұхамеджан Түймебаев ауылы, Алматинская көшесі 1, Ертіс кафесі"
-      };
+      const params = new URLSearchParams();
+      params.append("name", formData.get("name") || "");
+      params.append("attendance", formData.get("attendance") || "");
+      params.append("note", formData.get("note") || "");
+      params.append("event", "Токтағанұлы Құрманғазыны еске алуға арналған ас");
+      params.append("date", "23.05.2026");
+      params.append("time", "13:00");
+      params.append("location", "Алматы облысы, Іле ауданы, Мұхамеджан Түймебаев ауылы, Алматинская көшесі 1, Ертіс кафесі");
 
       statusEl.textContent = "Жіберілуде...";
       statusEl.style.color = "#2f7a45";
@@ -681,14 +678,17 @@
       try {
         const response = await fetch(scriptURL, {
           method: "POST",
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(payload)
+          body: params
         });
 
-        const data = await response.json().catch(() => ({}));
+        const text = await response.text();
+        let data = {};
+
+        try {
+          data = JSON.parse(text);
+        } catch (err) {
+          data = {};
+        }
 
         if (response.ok) {
           statusEl.textContent = data.message || "Жауабыңыз қабылданды. Рақмет!";
@@ -700,7 +700,7 @@
       } catch (error) {
         statusEl.textContent = "Жіберу сәтсіз болды. Қайтадан байқап көріңіз.";
         statusEl.style.color = "#b42318";
-        console.error(error);
+        console.error("Submit error:", error);
       }
     });
   </script>
