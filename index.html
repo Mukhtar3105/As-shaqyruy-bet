@@ -360,7 +360,6 @@
           <p>Төмендегі форманы толтырып, жауабыңызды жіберсеңіз болады.</p>
 
           <form id="rsvpForm">
-
             <div class="field">
               <label for="name">Аты-жөніңіз</label>
               <input
@@ -398,7 +397,6 @@
             </div>
 
             <button type="submit">Жауап жіберу</button>
-
             <div id="status"></div>
           </form>
         </div>
@@ -407,7 +405,7 @@
   </div>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbwUiigCvXd81uiZMAbH4WI0L1SDgaOVLyPKqjjpF2wkFnTCo-FV7W7_8aTJzd55HS61/exec";
+    const scriptURL = "PASTE_YOUR_WEB_APP_URL_HERE";
 
     const form = document.getElementById("rsvpForm");
     const status = document.getElementById("status");
@@ -439,12 +437,12 @@
         });
 
         const text = await response.text();
-
         let result;
+
         try {
           result = JSON.parse(text);
         } catch (err) {
-          throw new Error("Серверден қате жауап келді");
+          throw new Error("Серверден қате жауап келді: " + text);
         }
 
         if (!response.ok || result.status !== "success") {
@@ -456,8 +454,7 @@
         form.reset();
 
       } catch (error) {
-        console.error(error);
-
+        console.error("Submit error:", error);
         status.className = "error";
         status.textContent = error.message || "Жіберу сәтсіз болды. Қайтадан байқап көріңіз.";
       }
