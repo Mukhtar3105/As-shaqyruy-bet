@@ -150,188 +150,75 @@
       line-height: 1.8;
     }
 
-    @media (max-width: 600px) {
-      body {
-        padding: 12px;
-      }
-
-      .card {
-        padding: 14px;
-      }
-
-      .content-box {
-        padding: 48px 16px 28px;
-        clip-path: polygon(10% 0%, 90% 0%, 100% 24%, 100% 100%, 0 100%, 0 24%);
-      }
-
-      h1 {
-        font-size: 36px;
-      }
-
-      .subtitle,
-      .text,
-      .dua,
-      .info-item {
-        font-size: 16px;
-      }
-
-      .photo-frame {
-        width: 190px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <!DOCTYPE html>
-<html lang="kk">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Асқа шақыру</title>
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Segoe UI", sans-serif;
+    .music-toggle {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, #9b741f, #d2a63c);
+      color: #fff;
+      font-size: 22px;
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(184,137,31,0.28);
+      z-index: 11000;
     }
 
-    body {
-      background: linear-gradient(to bottom, #f7f1e6, #ece3d1);
-      min-height: 100vh;
-      display: flex;
+    .music-prompt {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: none;
+      align-items: center;
       justify-content: center;
+      z-index: 10000;
       padding: 20px;
-      color: #3d3429;
     }
 
-    .wrapper {
-      width: 100%;
-      max-width: 720px;
-    }
-
-    .card {
-      position: relative;
-      background: linear-gradient(to bottom, #fdfbf8, #f5ede0);
-      border-radius: 34px;
-      padding: 24px;
-      border: 2px solid rgba(184, 137, 31, 0.35);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.08);
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 12px;
-      border: 1px solid rgba(184, 137, 31, 0.35);
-      border-radius: 24px;
-      pointer-events: none;
-    }
-
-    .content-box {
-      position: relative;
+    .music-prompt-box {
       background: #fffdfa;
-      clip-path: polygon(18% 0%, 82% 0%, 100% 30%, 100% 100%, 0 100%, 0 30%);
-      border: 2px solid rgba(184, 137, 31, 0.6);
-      padding: 60px 26px 40px;
+      border-radius: 24px;
+      padding: 28px 24px;
+      max-width: 360px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+      border: 1px solid rgba(184,137,31,0.25);
     }
 
-    .crescent {
-      text-align: center;
-      font-size: 56px;
-      color: #b8891f;
+    .music-icon {
+      font-size: 42px;
       margin-bottom: 12px;
+      color: #b8891f;
     }
 
-    h1 {
-      text-align: center;
+    .music-title {
+      font-size: 22px;
       color: #24573a;
-      font-size: 46px;
+      font-weight: 700;
       margin-bottom: 10px;
       font-family: Georgia, serif;
     }
 
-    .subtitle {
-      text-align: center;
+    .music-text {
       color: #6b6256;
-      font-size: 18px;
       line-height: 1.7;
-      margin-bottom: 28px;
+      margin-bottom: 20px;
+      font-size: 15px;
     }
 
-    .photo-frame {
-      width: 220px;
-      margin: 0 auto 28px;
-      padding: 8px;
-      border-radius: 24px;
-      background: linear-gradient(135deg, #b8891f, #e4c86d);
-      box-shadow: 0 12px 26px rgba(184,137,31,0.25);
-    }
-
-    .photo-frame img {
-      width: 100%;
-      display: block;
+    .music-btn {
+      border: none;
       border-radius: 18px;
-      object-fit: cover;
-      aspect-ratio: 3 / 4;
-    }
-
-    .text {
-      text-align: center;
-      line-height: 1.9;
-      font-size: 18px;
-      color: #42382d;
-    }
-
-    .text strong {
-      color: #215f39;
-    }
-
-    .info {
-      margin-top: 28px;
-      background: #fff;
-      border-radius: 22px;
-      border: 1px solid rgba(184,137,31,0.18);
-      padding: 20px 18px;
-    }
-
-    .info-item {
-      text-align: center;
-      margin-bottom: 18px;
-      line-height: 1.8;
-      font-size: 17px;
-    }
-
-    .info-item:last-child {
-      margin-bottom: 0;
-    }
-
-    .label {
-      display: block;
-      font-size: 13px;
-      color: #a07b2d;
+      padding: 14px 24px;
+      background: linear-gradient(135deg, #9b741f, #d2a63c);
+      color: white;
+      font-size: 16px;
       font-weight: 700;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-
-    .dua {
-      margin-top: 28px;
-      text-align: center;
-      line-height: 1.9;
-      font-size: 17px;
-      color: #574d41;
-    }
-
-    .family {
-      margin-top: 24px;
-      text-align: center;
-      color: #8a6a2f;
-      font-weight: 700;
-      line-height: 1.8;
+      cursor: pointer;
+      width: 100%;
     }
 
     @media (max-width: 600px) {
@@ -366,6 +253,24 @@
   </style>
 </head>
 <body>
+  <audio id="bgMusic" loop playsinline>
+    <source src="karatorgay.mpeg" type="audio/mpeg">
+    Ваш браузер не поддерживает аудио.
+  </audio>
+
+  <div id="musicPrompt" class="music-prompt">
+    <div class="music-prompt-box">
+      <div class="music-icon">♪</div>
+      <div class="music-title">Әуенді қосу</div>
+      <div class="music-text">
+        Егер телефоныңыз автоматты ойнатуды бұғаттаса, төмендегі батырманы басыңыз.
+      </div>
+      <button id="playMusicBtn" class="music-btn">Әуенді қосу</button>
+    </div>
+  </div>
+
+  <button id="musicToggle" class="music-toggle" type="button" aria-label="Музыка">♪</button>
+
   <div class="wrapper">
     <div class="card">
       <div class="content-box">
@@ -419,60 +324,79 @@
       </div>
     </div>
   </div>
-</body>
-</html>
-  <div class="wrapper">
-    <div class="card">
-      <div class="content-box">
 
-        <div class="crescent">☪</div>
+  <script>
+    const audio = document.getElementById("bgMusic");
+    const promptBox = document.getElementById("musicPrompt");
+    const playBtn = document.getElementById("playMusicBtn");
+    const toggleBtn = document.getElementById("musicToggle");
 
-        <h1>Асқа шақыру</h1>
+    audio.volume = 0.6;
 
-        <div class="subtitle">
-          Токтағанұлы Құрманғазыны еске алуға арналған ас
-        </div>
+    function updateToggleIcon() {
+      toggleBtn.textContent = audio.paused ? "♪" : "❚❚";
+    }
 
-        <div class="photo-frame">
-          <img src="photo1.jpg" alt="Токтағанұлы Құрманғазы">
-        </div>
+    function tryPlayMusic() {
+      const playPromise = audio.play();
 
-        <div class="text">
-          Құрметті <strong>ағайын-туыс, құда-жекжат, дос-жаран!</strong><br><br>
-          Сіздерді Токтағанұлы Құрманғазыны еске алуға арналған асқа арнайы шақырамыз.
-        </div>
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            promptBox.style.display = "none";
+            updateToggleIcon();
+          })
+          .catch(() => {
+            promptBox.style.display = "flex";
+            updateToggleIcon();
+          });
+      }
+    }
 
-        <div class="info">
-          <div class="info-item">
-            <span class="label">Күні</span>
-            23.05.2026 жыл, сенбі
-          </div>
+    window.addEventListener("load", () => {
+      tryPlayMusic();
+    });
 
-          <div class="info-item">
-            <span class="label">Уақыты</span>
-            Сағат 13:00
-          </div>
+    playBtn.addEventListener("click", () => {
+      audio.play()
+        .then(() => {
+          promptBox.style.display = "none";
+          updateToggleIcon();
+        })
+        .catch(() => {
+          promptBox.style.display = "flex";
+          updateToggleIcon();
+        });
+    });
 
-          <div class="info-item">
-            <span class="label">Өтетін орны</span>
-            Алматы облысы, Іле ауданы,<br>
-            Мұхамеджан Түймебаев ауылы,<br>
-            Алматинская көшесі 1, «Ертіс» кафесі
-          </div>
-        </div>
+    toggleBtn.addEventListener("click", () => {
+      if (audio.paused) {
+        audio.play()
+          .then(() => {
+            promptBox.style.display = "none";
+            updateToggleIcon();
+          })
+          .catch(() => {
+            promptBox.style.display = "flex";
+            updateToggleIcon();
+          });
+      } else {
+        audio.pause();
+        updateToggleIcon();
+      }
+    });
 
-        <div class="dua">
-          Қадірлі қонағымыз болып, марқұмның рухына құран бағыштап,
-          дұға етуге келіңіздер.
-        </div>
+    document.addEventListener("click", function firstInteraction() {
+      if (audio.paused) {
+        tryPlayMusic();
+      }
+      document.removeEventListener("click", firstInteraction);
+    });
 
-        <div class="family">
-          Ізгі тілекпен,<br>
-          Токтағанұлы Құрманғазының отбасы
-        </div>
+    audio.addEventListener("play", updateToggleIcon);
+    audio.addEventListener("pause", updateToggleIcon);
 
-      </div>
-    </div>
-  </div>
+    updateToggleIcon();
+  </script>
 </body>
 </html>
