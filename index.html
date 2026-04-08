@@ -1,708 +1,431 @@
 <!DOCTYPE html>
 <html lang="kk">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Асқа шақыру</title>
+
   <style>
-    * { box-sizing: border-box; }
-
-    :root {
-      --bg-top: #f6f1e7;
-      --bg-bottom: #ece3d2;
-      --card-top: #f4ede1;
-      --card-bottom: #ece1cf;
-      --paper-top: #fdfbf7;
-      --paper-mid: #fffdfa;
-      --paper-bottom: #f6efe3;
-      --accent: #b8891f;
-      --accent-soft: #e8c86d;
-      --text: #2f2a22;
-      --text-soft: #6a6254;
-      --line: rgba(184, 137, 31, 0.55);
-      --green-text: #24573a;
-      --success: #2f7a45;
-      --danger: #b42318;
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:"Segoe UI",sans-serif;
     }
 
-    html {
-      scroll-behavior: smooth;
+    body{
+      background:linear-gradient(to bottom,#f7f1e6,#ece3d1);
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      padding:20px;
+      color:#3d3429;
     }
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: "Segoe UI", Tahoma, sans-serif;
-      background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      color: var(--text);
+    .wrapper{
+      width:100%;
+      max-width:700px;
     }
 
-    .wrapper {
-      width: 100%;
-      max-width: 860px;
+    .card{
+      position:relative;
+      background:linear-gradient(to bottom,#fdfbf8,#f5ede0);
+      border-radius:32px;
+      padding:30px 18px 90px;
+      box-shadow:0 18px 40px rgba(0,0,0,.08);
+      overflow:hidden;
+      border:2px solid rgba(184,137,31,.4);
     }
 
-    .card {
-      position: relative;
-      overflow: hidden;
-      padding: 28px 26px 44px;
-      border-radius: 36px;
-      background: linear-gradient(180deg, var(--card-top) 0%, var(--card-bottom) 100%);
-      box-shadow: 0 24px 60px rgba(86, 67, 39, 0.14);
+    .card:before{
+      content:"";
+      position:absolute;
+      inset:12px;
+      border:1px solid rgba(184,137,31,.45);
+      border-radius:26px;
+      pointer-events:none;
     }
 
-    .ornament-frame {
-      position: relative;
-      width: 100%;
-      padding: 48px 54px 120px;
+    .top-shape{
+      width:100%;
+      max-width:520px;
+      margin:0 auto;
+      background:#fffdfa;
+      clip-path:polygon(18% 0%,82% 0%,100% 34%,100% 100%,0 100%,0 34%);
+      border:2px solid rgba(184,137,31,.7);
+      padding:55px 28px 40px;
+      position:relative;
     }
 
-    .arch {
-      position: relative;
-      background: linear-gradient(180deg, var(--paper-top) 0%, var(--paper-mid) 58%, var(--paper-bottom) 100%);
-      min-height: 980px;
-      clip-path: polygon(
-        18% 0%,
-        82% 0%,
-        100% 38%,
-        100% 100%,
-        0% 100%,
-        0% 38%
-      );
-      padding: 88px 64px 150px;
-      box-shadow:
-        inset 0 0 0 2px rgba(184, 137, 31, 0.88),
-        inset 0 0 0 14px rgba(255, 255, 255, 0.96);
+    .crescent{
+      text-align:center;
+      font-size:54px;
+      color:#b8891f;
+      margin-bottom:10px;
     }
 
-    .arch::before {
-      content: "";
-      position: absolute;
-      inset: 18px;
-      clip-path: polygon(
-        18% 0%,
-        82% 0%,
-        100% 38%,
-        100% 100%,
-        0% 100%,
-        0% 38%
-      );
-      border: 2px solid var(--line);
-      pointer-events: none;
+    h1{
+      text-align:center;
+      color:#24573a;
+      font-size:46px;
+      margin-bottom:12px;
+      font-family:Georgia,serif;
     }
 
-    .side-ornament {
-      position: absolute;
-      top: 150px;
-      bottom: 150px;
-      width: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(184, 137, 31, 0.85);
-      font-size: 24px;
-      letter-spacing: 2px;
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
-      user-select: none;
+    .subtitle{
+      text-align:center;
+      color:#6d6458;
+      font-size:18px;
+      line-height:1.7;
+      margin-bottom:28px;
     }
 
-    .side-ornament.left { left: 16px; }
-    .side-ornament.right { right: 16px; transform: rotate(180deg); }
-
-    .crescent {
-      text-align: center;
-      font-size: 64px;
-      color: var(--accent);
-      line-height: 1;
-      margin-bottom: 12px;
-      text-shadow: 0 6px 18px rgba(184, 137, 31, 0.12);
+    .photo-frame{
+      width:220px;
+      margin:0 auto 28px;
+      padding:8px;
+      border-radius:24px;
+      background:linear-gradient(135deg,#b8891f,#e3c56f);
+      box-shadow:0 10px 25px rgba(184,137,31,.25);
     }
 
-    .title {
-      text-align: center;
-      font-family: Georgia, serif;
-      font-size: clamp(26px, 5vw, 52px);
-      color: var(--green-text);
-      margin: 8px 0 12px;
-      line-height: 1.12;
-      word-break: break-word;
+    .photo-frame img{
+      width:100%;
+      display:block;
+      border-radius:18px;
+      object-fit:cover;
+      aspect-ratio:3/4;
     }
 
-    .subtitle {
-      text-align: center;
-      font-size: 18px;
-      color: var(--text-soft);
-      line-height: 1.75;
-      max-width: 560px;
-      margin: 0 auto 30px;
+    .text{
+      text-align:center;
+      font-size:18px;
+      line-height:1.9;
+      color:#42382d;
     }
 
-    .photo-frame {
-      width: 230px;
-      margin: 0 auto 28px;
-      padding: 10px;
-      border-radius: 24px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-soft));
-      box-shadow: 0 16px 30px rgba(113, 88, 31, 0.16);
+    .text strong{
+      color:#215f39;
     }
 
-    .photo-frame img {
-      width: 100%;
-      aspect-ratio: 3 / 4;
-      object-fit: cover;
-      border-radius: 16px;
-      display: block;
-      background: #e8efe2;
+    .info{
+      margin-top:24px;
+      background:#fff;
+      border-radius:22px;
+      padding:22px 18px;
+      border:1px solid rgba(184,137,31,.2);
     }
 
-    .content {
-      max-width: 560px;
-      margin: 0 auto;
-      text-align: center;
+    .info-item{
+      margin-bottom:18px;
+      text-align:center;
+      line-height:1.7;
     }
 
-    .content p {
-      margin: 0 0 16px;
-      font-size: 18px;
-      line-height: 1.9;
-      color: var(--text);
+    .info-item:last-child{
+      margin-bottom:0;
     }
 
-    .content strong {
-      color: #215f39;
+    .label{
+      display:block;
+      color:#a07c2f;
+      font-size:13px;
+      font-weight:700;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      margin-bottom:4px;
     }
 
-    .info-box {
-      margin: 28px auto 0;
-      background: linear-gradient(180deg, #fffdfa, #f7f0e4);
-      border: 1px solid rgba(184, 137, 31, 0.18);
-      border-radius: 22px;
-      padding: 22px 20px;
-      box-shadow: 0 12px 30px rgba(119, 96, 45, 0.08);
+    .dua{
+      margin-top:24px;
+      text-align:center;
+      line-height:1.9;
+      font-size:17px;
+      color:#54493d;
     }
 
-    .info-item {
-      margin-bottom: 14px;
-      font-size: 18px;
-      line-height: 1.75;
-      color: var(--text);
+    .family{
+      margin-top:18px;
+      text-align:center;
+      font-weight:700;
+      color:#8a6a2f;
+      line-height:1.8;
     }
 
-    .info-item:last-child {
-      margin-bottom: 0;
+    .rsvp{
+      margin-top:34px;
+      background:#fffdfa;
+      border-radius:24px;
+      padding:24px 18px;
+      border:1px solid rgba(184,137,31,.2);
     }
 
-    .label {
-      display: block;
-      font-size: 13px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: #a18240;
-      margin-bottom: 4px;
-      font-weight: 700;
+    .rsvp h2{
+      text-align:center;
+      color:#24573a;
+      font-size:34px;
+      margin-bottom:10px;
+      font-family:Georgia,serif;
     }
 
-    .dua {
-      margin-top: 26px;
-      font-size: 18px;
-      line-height: 1.9;
-      color: #4c4438;
+    .rsvp p{
+      text-align:center;
+      color:#6d6458;
+      margin-bottom:24px;
+      line-height:1.7;
     }
 
-    .family {
-      margin-top: 22px;
-      font-weight: 700;
-      color: #7f6730;
-      font-size: 18px;
+    .field{
+      margin-bottom:18px;
     }
 
-    .actions {
-      margin-top: 30px;
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      flex-wrap: wrap;
+    .field label{
+      display:block;
+      margin-bottom:8px;
+      font-size:15px;
+      font-weight:700;
+      color:#55493c;
     }
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 220px;
-      padding: 15px 24px;
-      border-radius: 18px;
-      text-decoration: none;
-      font-size: 17px;
-      font-weight: 700;
-      transition: transform .2s ease, box-shadow .2s ease;
-      cursor: pointer;
-      border: none;
+    input[type="text"],
+    textarea{
+      width:100%;
+      border:1px solid rgba(184,137,31,.25);
+      border-radius:18px;
+      padding:16px;
+      font-size:16px;
+      background:#fff;
+      outline:none;
+      color:#3d3429;
     }
 
-    .btn-primary {
-      color: #fff;
-      background: linear-gradient(135deg, #8f6a1d, #c69a31);
-      box-shadow: 0 14px 24px rgba(160, 122, 37, 0.24);
+    textarea{
+      resize:none;
+      min-height:110px;
     }
 
-    .btn:hover {
-      transform: translateY(-2px);
+    .radio{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
     }
 
-    .rsvp-section {
-      margin: 34px auto 0;
-      max-width: 560px;
-      background: linear-gradient(180deg, #fffdfa, #f7f0e5);
-      border-radius: 24px;
-      padding: 24px 20px;
-      border: 1px solid rgba(184, 137, 31, 0.18);
-      box-shadow: 0 14px 34px rgba(119, 96, 45, 0.10);
-      text-align: left;
+    .radio-option{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      background:#fff;
+      border:1px solid rgba(184,137,31,.25);
+      border-radius:18px;
+      padding:16px;
     }
 
-    .rsvp-title {
-      margin: 0 0 8px;
-      text-align: center;
-      font-family: Georgia, serif;
-      color: var(--green-text);
-      font-size: 30px;
+    .radio-option input{
+      width:22px;
+      height:22px;
+      accent-color:#b8891f;
     }
 
-    .rsvp-note {
-      margin: 0 0 18px;
-      text-align: center;
-      font-size: 15px;
-      line-height: 1.65;
-      color: var(--text-soft);
+    .radio-option span{
+      font-size:17px;
+      font-weight:600;
     }
 
-    form {
-      display: grid;
-      gap: 14px;
+    button{
+      width:100%;
+      border:none;
+      border-radius:22px;
+      padding:18px;
+      background:linear-gradient(135deg,#9b741f,#d0a33a);
+      color:#fff;
+      font-size:20px;
+      font-weight:700;
+      cursor:pointer;
+      box-shadow:0 10px 20px rgba(184,137,31,.25);
+      transition:.2s;
     }
 
-    .field {
-      display: grid;
-      gap: 8px;
+    button:hover{
+      transform:translateY(-2px);
     }
 
-    .field label {
-      font-size: 15px;
-      font-weight: 700;
-      color: #5c5346;
+    #status{
+      margin-top:18px;
+      text-align:center;
+      font-size:17px;
+      font-weight:700;
+      min-height:24px;
     }
 
-    .field input,
-    .field textarea {
-      width: 100%;
-      border: 1px solid rgba(184, 137, 31, 0.2);
-      background: #fff;
-      border-radius: 16px;
-      padding: 14px 16px;
-      font-size: 16px;
-      color: var(--text);
-      outline: none;
-      transition: border-color .2s ease, box-shadow .2s ease;
+    .success{
+      color:#2f7a45;
     }
 
-    .field input:focus,
-    .field textarea:focus {
-      border-color: #b8891f;
-      box-shadow: 0 0 0 4px rgba(184, 137, 31, 0.08);
+    .error{
+      color:#b42318;
     }
 
-    .field textarea {
-      min-height: 110px;
-      resize: vertical;
-    }
-
-    .radio-group {
-      display: grid;
-      gap: 10px;
-    }
-
-    .radio-option {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      border: 1px solid rgba(184, 137, 31, 0.18);
-      background: #fff;
-      border-radius: 16px;
-      padding: 14px 16px;
-      cursor: pointer;
-    }
-
-    .radio-option input {
-      width: 18px;
-      height: 18px;
-      margin: 0;
-      accent-color: #8f6a1d;
-    }
-
-    .radio-option span {
-      font-size: 16px;
-      color: var(--text);
-      font-weight: 600;
-    }
-
-    .submit-btn {
-      margin-top: 4px;
-      border: none;
-      border-radius: 18px;
-      padding: 16px 22px;
-      font-size: 17px;
-      font-weight: 700;
-      color: #fff;
-      background: linear-gradient(135deg, #8f6a1d, #c69a31);
-      box-shadow: 0 14px 24px rgba(160, 122, 37, 0.22);
-      cursor: pointer;
-      transition: transform .2s ease;
-    }
-
-    .submit-btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .status {
-      min-height: 24px;
-      text-align: center;
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--success);
-    }
-
-    .footer-note {
-      margin-top: 8px;
-      font-size: 13px;
-      line-height: 1.6;
-      color: #877e70;
-      text-align: center;
-    }
-
-    .mosque {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 92px;
-      height: 180px;
-      pointer-events: none;
-      opacity: 0.18;
-      display: flex;
-      align-items: end;
-      justify-content: center;
-    }
-
-    .mosque svg {
-      width: 92%;
-      height: 100%;
-      fill: #bba77e;
-    }
-
-    .bottom-domes {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      padding: 0 20px;
-      pointer-events: none;
-    }
-
-    .dome {
-      width: 118px;
-      height: 92px;
-      border-radius: 80px 80px 0 0;
-      background: linear-gradient(180deg, #eccb74 0%, #c6962d 100%);
-      position: relative;
-      box-shadow: 0 10px 24px rgba(99, 73, 26, 0.14);
-    }
-
-    .dome::before {
-      content: "☪";
-      position: absolute;
-      top: -18px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: #c6962d;
-      font-size: 26px;
-    }
-
-    .curve-line {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: 66px;
-      width: calc(100% - 100px);
-      height: 90px;
-      border-bottom: 2px solid rgba(184, 137, 31, 0.45);
-      border-radius: 0 0 120px 120px;
-      pointer-events: none;
-    }
-
-    @media (max-width: 700px) {
-      body {
-        padding: 12px;
+    @media(max-width:600px){
+      h1{
+        font-size:36px;
       }
 
-      .card {
-        padding: 16px 14px 26px;
+      .top-shape{
+        padding:48px 18px 30px;
+        clip-path:polygon(10% 0%,90% 0%,100% 28%,100% 100%,0 100%,0 28%);
       }
 
-      .ornament-frame {
-        padding: 26px 12px 90px;
+      .photo-frame{
+        width:190px;
       }
 
-      .arch {
-        min-height: auto;
-        padding: 72px 24px 132px;
-        clip-path: polygon(10% 0%, 90% 0%, 100% 30%, 100% 100%, 0% 100%, 0% 30%);
-      }
-
-      .arch::before {
-        clip-path: polygon(10% 0%, 90% 0%, 100% 30%, 100% 100%, 0% 100%, 0% 30%);
-      }
-
-      .side-ornament {
-        display: none;
-      }
-
-      .photo-frame {
-        width: 190px;
-      }
-
-      .title {
-        font-size: 34px;
-      }
-
-      .subtitle {
-        font-size: 16px;
-      }
-
-      .content p,
-      .info-item,
-      .dua,
-      .family {
-        font-size: 16px;
-      }
-
-      .dome {
-        width: 84px;
-        height: 66px;
-      }
-
-      .curve-line {
-        width: calc(100% - 36px);
-      }
-
-      .btn {
-        min-width: 100%;
-      }
-
-      .rsvp-title {
-        font-size: 26px;
-      }
-
-      .mosque {
-        height: 130px;
+      .rsvp h2{
+        font-size:28px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="wrapper">
-    <section class="card">
-      <div class="ornament-frame">
-        <div class="side-ornament left">❁ ❁ ❁ ❁ ❁ ❁ ❁ ❁ ❁</div>
-        <div class="side-ornament right">❁ ❁ ❁ ❁ ❁ ❁ ❁ ❁ ❁</div>
 
-        <div class="arch">
-          <div class="crescent">☪</div>
+<div class="wrapper">
+  <div class="card">
 
-          <h1 class="title">Асқа шақыру</h1>
+    <div class="top-shape">
+      <div class="crescent">☪</div>
 
-          <div class="subtitle">
-            Токтағанұлы Құрманғазыны еске алуға арналған ас
-          </div>
+      <h1>Асқа шақыру</h1>
 
-          <div class="photo-frame">
-            <img src="photo1.jpg" alt="Токтағанұлы Құрманғазы" />
-          </div>
+      <div class="subtitle">
+        Токтағанұлы Құрманғазыны еске алуға арналған ас
+      </div>
 
-          <div class="content">
-            <p>
-              Құрметті <strong>ағайын-туыс, құда-жекжат, дос-жаран</strong>!
-            </p>
+      <div class="photo-frame">
+        <img src="photo1.jpg" alt="Токтағанұлы Құрманғазы">
+      </div>
 
-            <p>
-              Сіздерді Токтағанұлы Құрманғазыны еске алуға арналған
-              асқа арнайы шақырамыз.
-            </p>
+      <div class="text">
+        Құрметті <strong>ағайын-туыс, құда-жекжат, дос-жаран!</strong><br><br>
 
-            <div class="info-box">
-              <div class="info-item">
-                <span class="label">Күні</span>
-                23.05.2026 жыл, сенбі
-              </div>
+        Сіздерді Токтағанұлы Құрманғазыны еске алуға арналған
+        асқа арнайы шақырамыз.
+      </div>
 
-              <div class="info-item">
-                <span class="label">Уақыты</span>
-                Сағат 13:00
-              </div>
-
-              <div class="info-item">
-                <span class="label">Өтетін орны</span>
-                Алматы облысы, Іле ауданы,<br>
-                Мұхамеджан Түймебаев ауылы,<br>
-                Алматинская көшесі 1, «Ертіс» кафесі
-              </div>
-            </div>
-
-            <div class="dua">
-              Қадірлі қонағымыз болып, марқұмның рухына құран бағыштап,
-              дұға етуге келіңіздер.
-            </div>
-
-            <div class="family">
-              Ізгі тілекпен,<br>
-              Токтағанұлы Құрманғазының отбасы
-            </div>
-
-            <div class="actions">
-              <a class="btn btn-primary" href="#rsvp">Қатысу жауабын жіберу</a>
-            </div>
-          </div>
-
-          <section class="rsvp-section" id="rsvp">
-            <h2 class="rsvp-title">Қатысу жауабы</h2>
-            <p class="rsvp-note">
-              Төмендегі форманы толтырып, жауабыңызды жіберсеңіз болады.
-            </p>
-
-            <form id="rsvpForm">
-              <div class="field">
-                <label for="name">Аты-жөніңіз</label>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  placeholder="Аты-жөніңізді жазыңыз"
-                  required
-                />
-              </div>
-
-              <div class="field">
-                <label>Қатысу мәртебесі</label>
-                <div class="radio-group">
-                  <label class="radio-option">
-                    <input type="radio" name="attendance" value="Келемін" required />
-                    <span>Келемін</span>
-                  </label>
-
-                  <label class="radio-option">
-                    <input type="radio" name="attendance" value="Қатыса алмаймын" />
-                    <span>Қатыса алмаймын</span>
-                  </label>
-                </div>
-              </div>
-
-              <div class="field">
-                <label for="note">Қосымша хабарлама</label>
-                <textarea
-                  id="note"
-                  name="note"
-                  placeholder="Қаласаңыз, қысқаша хабарлама қалдыра аласыз"
-                ></textarea>
-              </div>
-
-              <button class="submit-btn" type="submit">Жауап жіберу</button>
-              <div class="status" id="status"></div>
-
-              <div class="footer-note">
-                Жауаптар Google Sheets кестесіне жіберіледі.
-              </div>
-            </form>
-          </section>
-
-          <div class="mosque" aria-hidden="true">
-            <svg viewBox="0 0 900 220" xmlns="http://www.w3.org/2000/svg">
-              <path d="M40 210h60V125h18v85h42v-90c0-18 14-33 32-33s32 15 32 33v90h42v-110h18v110h70v-120h18v120h52v-95c0-26 20-48 46-52v-28c-8-3-14-11-14-20 0-12 10-22 22-22s22 10 22 22c0 9-6 17-14 20v28c26 4 46 26 46 52v95h52V90h18v120h70V100h18v110h42v-90c0-18 14-33 32-33s32 15 32 33v90h42v-85h18v85h60v10H40z"/>
-            </svg>
-          </div>
+      <div class="info">
+        <div class="info-item">
+          <span class="label">Күні</span>
+          23.05.2026 жыл, сенбі
         </div>
 
-        <div class="curve-line"></div>
+        <div class="info-item">
+          <span class="label">Уақыты</span>
+          Сағат 13:00
+        </div>
 
-        <div class="bottom-domes" aria-hidden="true">
-          <div class="dome"></div>
-          <div class="dome"></div>
+        <div class="info-item">
+          <span class="label">Өтетін орны</span>
+          Алматы облысы, Іле ауданы,<br>
+          Мұхамеджан Түймебаев ауылы,<br>
+          Алматинская көшесі 1, «Ертіс» кафесі
         </div>
       </div>
-    </section>
+
+      <div class="dua">
+        Қадірлі қонағымыз болып, марқұмның рухына құран бағыштап,
+        дұға етуге келіңіздер.
+      </div>
+
+      <div class="family">
+        Ізгі тілекпен,<br>
+        Токтағанұлы Құрманғазының отбасы
+      </div>
+
+      <div class="rsvp">
+        <h2>Қатысу жауабы</h2>
+
+        <p>
+          Төмендегі форманы толтырып, жауабыңызды жіберсеңіз болады.
+        </p>
+
+        <form id="rsvpForm">
+
+          <div class="field">
+            <label>Аты-жөніңіз</label>
+            <input type="text" name="name" placeholder="Аты-жөніңізді жазыңыз" required>
+          </div>
+
+          <div class="field">
+            <label>Қатысу мәртебесі</label>
+
+            <div class="radio">
+              <label class="radio-option">
+                <input type="radio" name="attendance" value="Қатысамын" required>
+                <span>Қатысамын</span>
+              </label>
+
+              <label class="radio-option">
+                <input type="radio" name="attendance" value="Қатыса алмаймын">
+                <span>Қатыса алмаймын</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Қосымша хабарлама</label>
+            <textarea name="note" placeholder="Қаласаңыз, қысқаша хабарлама қалдыра аласыз"></textarea>
+          </div>
+
+          <button type="submit">Жауап жіберу</button>
+
+          <div id="status"></div>
+        </form>
+      </div>
+    </div>
   </div>
+</div>
 
-  <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbzQLivN3WuEL_4L_XP9rNLSBCO_yVlpKNHnD_9RPggzIGdz2CpBVLz57m06Al7ec_01/exec";
-    const form = document.getElementById("rsvpForm");
-    const statusEl = document.getElementById("status");
+<script>
+  const scriptURL = "PASTE_YOUR_GOOGLE_SCRIPT_URL_HERE";
+  const form = document.getElementById("rsvpForm");
+  const status = document.getElementById("status");
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+  form.addEventListener("submit", async function(e){
+    e.preventDefault();
 
-      if (!scriptURL || scriptURL.includes("PASTE_YOUR")) {
-        statusEl.textContent = "Google Apps Script сілтемесі енгізілмеген.";
-        statusEl.style.color = "#b42318";
-        return;
-      }
+    status.className = "";
+    status.textContent = "Жіберілуде...";
 
-      const formData = new FormData(form);
+    const data = new FormData(form);
+    const params = new URLSearchParams();
 
-      const params = new URLSearchParams();
-      params.append("name", formData.get("name") || "");
-      params.append("attendance", formData.get("attendance") || "");
-      params.append("note", formData.get("note") || "");
-      params.append("event", "Токтағанұлы Құрманғазыны еске алуға арналған ас");
-      params.append("date", "23.05.2026");
-      params.append("time", "13:00");
-      params.append("location", "Алматы облысы, Іле ауданы, Мұхамеджан Түймебаев ауылы, Алматинская көшесі 1, Ертіс кафесі");
+    params.append("name", data.get("name"));
+    params.append("attendance", data.get("attendance"));
+    params.append("note", data.get("note"));
+    params.append("event", "Токтағанұлы Құрманғазыны еске алуға арналған ас");
+    params.append("date", "23.05.2026");
+    params.append("time", "13:00");
+    params.append("location", "Алматы облысы, Іле ауданы, Мұхамеджан Түймебаев ауылы, Алматинская көшесі 1, Ертіс кафесі");
 
-      statusEl.textContent = "Жіберілуде...";
-      statusEl.style.color = "#2f7a45";
+    try{
+      const response = await fetch(scriptURL,{
+        method:"POST",
+        body:params
+      });
 
-      try {
-        const response = await fetch(scriptURL, {
-          method: "POST",
-          body: params
-        });
+      const result = await response.text();
 
-        const text = await response.text();
-        let data = {};
+      status.className = "success";
+      status.textContent = "Жауабыңыз қабылданды. Рақмет!";
+      form.reset();
 
-        try {
-          data = JSON.parse(text);
-        } catch (err) {
-          data = {};
-        }
+      console.log(result);
 
-        if (response.ok) {
-          statusEl.textContent = data.message || "Жауабыңыз қабылданды. Рақмет!";
-          statusEl.style.color = "#2f7a45";
-          form.reset();
-        } else {
-          throw new Error(data.message || "Сервер қатесі орын алды.");
-        }
-      } catch (error) {
-        statusEl.textContent = "Жіберу сәтсіз болды. Қайтадан байқап көріңіз.";
-        statusEl.style.color = "#b42318";
-        console.error("Submit error:", error);
-      }
-    });
-  </script>
+    }catch(error){
+      console.error(error);
+      status.className = "error";
+      status.textContent = "Жіберу сәтсіз болды. Қайтадан байқап көріңіз.";
+    }
+  });
+</script>
+
 </body>
 </html>
